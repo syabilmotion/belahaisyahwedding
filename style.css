@@ -89,7 +89,7 @@ body.opened .hero{visibility:visible}
 .couples-short{margin:10px 0 4px}
 .bismillah{font-family:"Amiri",serif;font-size:24px;line-height:1.7;margin-top:6px}
 .host-note{font-style:italic}
-.couple .deco{font-family:"Alex Brush",cursive;font-size:clamp(24px,7vw,28px);line-height:1.35}
+.couple .deco{font-family:"Dancing Script",cursive;font-weight:700;font-size:clamp(21px,6vw,25px);line-height:1.35}
 .couple .amp{font-size:22px}
 .divider{width:60px;height:1px;background:#999;margin:16px auto}
 .closing{max-width:320px;margin:0 auto}
@@ -102,7 +102,7 @@ body.opened .hero{visibility:visible}
 .t-small{font-size:14px}
 .t-strong{font-weight:600;color:var(--ink-dark)}
 .mt{margin-top:22px}
-.script{font-family:"Alex Brush",cursive;font-size:26px;line-height:1.5}
+.script{font-family:"Italianno",cursive;font-weight:700;font-size:34px;line-height:1.3}
 .deco{font-family:"Cinzel Decorative",serif;font-size:22px;line-height:1.5}
 .deco.sm{font-size:16px}
 .guest{display:block;font-family:"Prata",serif;font-weight:600;font-size:17px}
