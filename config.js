@@ -59,7 +59,7 @@ window.WEDDING = {
   postal: "Noradam Bin Ahmad<br>0123456789<br>No. 4, Jalan Pahat,<br>Taman Gembira, Seksyen 40,<br>Shah Alam, Selangor",
 
   // Letak fail lagu di assets/lagu.mp3
-  song: "assets/lagu.mp3",
+  song: "assets/lagu.mp3?v=2",
   songTitle: "Maula Ya Salli Wa Sallim (Qasidah Burdah) - Piano",
 
   // Ucapan awal (kosong untuk majlis sebenar)

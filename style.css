@@ -72,6 +72,9 @@ body.scrolled #bg::after{opacity:1}
 #main{position:relative;z-index:1;padding:0 32px 140px;text-align:center}
 .sec{padding:60px 0}
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-bottom:16vh}
+/* hero sits behind the transparent cover: keep it hidden until BUKA */
+.hero{visibility:hidden}
+body.opened .hero{visibility:visible}
 /* ---------- Motion: letters rise + blur in, long ease-out tail ---------- */
 .ch{display:inline-block;opacity:0;transform:translateY(.5em);filter:blur(6px);will-change:transform,opacity,filter}
 .ch.sp{width:.28em}
