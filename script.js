@@ -164,6 +164,7 @@
     const defs = `<defs>
       ${petalDefs("b", "#e4f3fa", "#86bcd8", "#4f86a6")}
       ${petalDefs("g", "#eef7e4", "#9cc98a", "#5d8f48")}
+      ${petalDefs("p", "#fdeef4", "#e89bba", "#b0577c")}
       <filter id="far" x="-50%" y="-10%" width="200%" height="120%"><feGaussianBlur stdDeviation="3.2"/></filter>
       <filter id="near" x="-50%" y="-10%" width="200%" height="120%"><feGaussianBlur stdDeviation="5"/></filter>
     </defs>`;
@@ -176,8 +177,8 @@
       nearL.forEach(([x, l]) => near += strand(x, l * .6, 1.4, "b", 1.2));
       return `<g filter="url(#far)" opacity=".4">${far}</g><g opacity=".85">${mid}</g><g filter="url(#near)" opacity=".6">${near}</g>`;
     }
-    const left = side([[22, 300], [62, 210]], [[6, 360, "b"], [38, 250, "b"], [70, 170, "g"]], [[-8, 330]]);
-    const right = side([[38, 240], [80, 320]], [[30, 180, "b"], [62, 270, "b"], [94, 380, "b"]], [[108, 300]]);
+    const left = side([[22, 300], [62, 210]], [[6, 360, "b"], [38, 250, "g"], [70, 190, "p"]], [[-8, 330]]);
+    const right = side([[38, 240], [80, 320]], [[30, 190, "p"], [62, 270, "g"], [94, 380, "b"]], [[108, 300]]);
     $(".wisteria").innerHTML =
       `<svg class="w-left" viewBox="0 0 100 560" preserveAspectRatio="xMinYMin slice">${defs}${left}</svg>` +
       `<svg class="w-right" viewBox="0 0 100 560" preserveAspectRatio="xMaxYMin slice">${right}</svg>`;
