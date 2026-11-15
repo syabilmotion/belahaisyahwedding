@@ -356,7 +356,7 @@ body{background:#e3e8da;color:var(--ink);font-family:"Cormorant Garamond",Georgi
 .c-label{font-family:"Cinzel",serif;font-size:12px;letter-spacing:.3em;color:var(--muted);margin-bottom:6px}
 .c-kicker{font-family:"Cinzel",serif;font-weight:600;font-size:clamp(13px,4vw,16px);letter-spacing:.3em;color:var(--gold-3);margin-top:8px}
 #cover .c-date{font-family:"Cinzel",serif;font-size:14px;letter-spacing:.34em;color:var(--ink);margin-top:8px;font-weight:400}
-.c-hijri{font-style:italic;font-size:15px;color:var(--muted);margin-top:2px}
+.c-hijri{font-style:italic;font-size:20px;font-weight:500;color:var(--ink);margin-top:4px}
 .mono{width:min(50vw,210px,21vh)}
 .mono + .mono{margin-top:calc(min(50vw,210px,21vh) * -.14)}
 .mono-l1,.mono-l2{fill:url(#goldGrad)}
@@ -406,7 +406,7 @@ body{background:#e3e8da;color:var(--ink);font-family:"Cormorant Garamond",Georgi
 .date-ring{width:112px;height:112px;margin:10px auto;border-radius:50%;border:1px solid var(--gold);display:grid;place-items:center;
   box-shadow:inset 0 0 0 6px var(--card),inset 0 0 0 7px var(--line)}
 .date-ring span{font-family:"Cinzel",serif;font-size:48px;line-height:1;color:var(--gold-3)}
-.hijri-it{font-style:italic;color:var(--muted);font-size:15px;margin:4px 0 12px}
+.hijri-it{font-style:italic;font-weight:500;color:var(--ink);font-size:20px;margin:4px 0 12px}
 .row{display:flex;gap:14px;align-items:flex-start;text-align:left;padding:16px 4px;border-top:1px dashed var(--line)}
 .ico{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center}
 .ico svg{width:19px;height:19px;fill:none;stroke:var(--gold-3);stroke-width:1.3}
