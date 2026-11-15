@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700&family=Amiri:wght@400;700&family=Cinzel:wght@400;600&family=Cinzel+Decorative&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Alex+Brush&family=Italianno&family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;500&family=Prata&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=24">
+<link rel="stylesheet" href="style.css?v=25">
 </head>
 <body class="locked">
 
@@ -125,15 +125,12 @@
       <div class="photo"><span>Letak gambar anda di<br><code>assets/photo.jpg</code></span></div>
     </section>
 
-    <!-- Attendance + wishes -->
+    <!-- Wishes -->
     <section class="sec reveal">
       <span class="orn"></span>
       <p class="kicker">DOA &amp; UCAPAN</p>
       <h2 class="stitle"><span class="gold-text">Ucapan</span></h2>
-      <div class="stats">
-        <div><b id="st-yes">0</b><span>Hadir</span></div>
-        <div><b id="st-no">0</b><span>Tidak Hadir</span></div>
-      </div>
+      <p class="wish-total" id="wishTotal"></p>
       <div class="wishes-wrap"><div id="wishes" class="wishes"></div></div>
       <div class="cta-row">
         <button class="btn-gold" type="button" data-open="rsvp" data-attend="1" data-focus="wish">Tulis Ucapan</button>
@@ -146,7 +143,7 @@
       <p class="doa" lang="ar" dir="rtl" data-bind="doa"></p>
       <p class="t-body closing" data-bind="closing"></p>
       <p class="deco hashtag" data-bind="hashtag"></p>
-      <p class="kicker mt">TERIMA KASIH</p>
+      <p class="kicker foot-kicker">TERIMA KASIH</p>
       <p class="foot-names gold-text" data-bind="footNames"></p>
       <p class="foot-date" data-bind="coverDate"></p>
       <p class="c-hijri" data-bind="hijri"></p>
@@ -225,24 +222,11 @@
     </div>
   </div>
 
-  <div class="sheet tall" id="sheet-rsvp">
+  <div class="sheet" id="sheet-rsvp">
     <div class="sheet-body">
-      <h3 class="h center">RSVP &amp; UCAPAN</h3>
-      <div class="seg" role="radiogroup">
-        <button type="button" class="seg-btn active" data-attend="1">Hadir</button>
-        <button type="button" class="seg-btn" data-attend="0">Tidak Hadir</button>
-      </div>
+      <h3 class="h center">TULIS UCAPAN</h3>
       <form id="rsvpForm" novalidate>
         <label>Nama <i>*</i><input name="name" required maxlength="80"></label>
-        <label>Nombor Telefon <i>*</i><input name="phone" type="tel" required maxlength="20"></label>
-        <div class="if-attend">
-          <label>Jumlah Dewasa (13 tahun &amp; ke atas) <i>*</i>
-            <select name="adults"><option>1 orang</option><option>2 orang</option><option>3 orang</option><option>4 orang</option></select>
-          </label>
-          <label>Jumlah Kanak-kanak (0 - 12 tahun) <i>*</i>
-            <select name="kids"><option>Tiada</option><option>1 orang</option><option>2 orang</option><option>3 orang</option><option>4 orang</option></select>
-          </label>
-        </div>
         <label>Ucapan <i>*</i>
           <textarea name="wish" id="wishInput" maxlength="500" rows="4" required></textarea>
           <small class="count"><span id="wishCount">0</span>/500</small>
@@ -252,7 +236,7 @@
           <button type="submit" class="btn-solid">Hantar</button>
         </div>
       </form>
-      <p id="rsvpThanks" class="t-body center" hidden>Terima kasih atas maklum balas anda.</p>
+      <p id="rsvpThanks" class="t-body center" hidden>Terima kasih atas ucapan anda.</p>
     </div>
   </div>
 
@@ -260,7 +244,7 @@
   <audio id="bgm" loop autoplay preload="auto"></audio>
 </div>
 
-<script src="config.js?v=24"></script>
-<script src="script.js?v=24"></script>
+<script src="config.js?v=25"></script>
+<script src="script.js?v=25"></script>
 </body>
 </html>

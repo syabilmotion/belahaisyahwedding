@@ -271,16 +271,12 @@
   function renderWishes() {
     const mine = store.get("rsvps", []);
     const list = [...mine.filter(x => x.wish).map(x => [x.wish, x.name]).reverse(), ...C.seedWishes];
-    const html = list.map(([w, n]) => `<div class="w"><p>“${esc(w)}”</p><b>${esc(n)}</b></div>`).join("");
+    // newest first, in a scrollable box; no attendance counts
     const box = $("#wishes");
-    const scroll = list.length > 3;
-    box.classList.toggle("static", !scroll);
-    box.parentElement.classList.toggle("short", !scroll);
-    box.innerHTML = list.length ? (scroll ? html + html : html) : `<p class="empty">Jadilah yang pertama menulis ucapan 🤍</p>`;
-    box.style.animationDuration = Math.max(20, list.length * 5) + "s";
-    const yes = C.seedStats.yes + mine.filter(x => x.attend).length;
-    const no = C.seedStats.no + mine.filter(x => !x.attend).length;
-    countTo($("#st-yes"), yes); countTo($("#st-no"), no);
+    box.innerHTML = list.length
+      ? list.map(([w, n]) => `<div class="w"><b>${esc(n)}</b><p>${esc(w)}</p></div>`).join("")
+      : `<p class="empty">Belum ada ucapan. Jadilah yang pertama.</p>`;
+    $("#wishTotal").textContent = list.length ? `${list.length} UCAPAN` : "";
   }
   renderWishes();
 
