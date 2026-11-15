@@ -189,10 +189,23 @@
   const setPlaying = p => musicBtn.classList.toggle("playing", p);
   audio.addEventListener("play", () => setPlaying(true));
   audio.addEventListener("pause", () => setPlaying(false));
-  const toggleMusic = () => audio.paused ? audio.play().catch(() => toast("Letak lagu di assets/lagu.mp3")) : audio.pause();
+  const toggleMusic = () => audio.paused ? audio.play().catch(() => {}) : audio.pause();
+
+  // Play as soon as the page opens. Most phones block sound until the first
+  // touch, so if that happens start on the guest's first tap / key press.
+  let userPaused = false;
+  audio.addEventListener("pause", () => { if (audio.currentTime > 0) userPaused = true; });
+  const kick = e => {
+    if (e.target.closest && e.target.closest("#musicBtn")) return; // music button handles itself
+    if (!userPaused && audio.paused) audio.play().catch(() => {});
+    if (!audio.paused) ["pointerdown", "touchend", "keydown", "click"].forEach(e => removeEventListener(e, kick, true));
+  };
+  audio.play().catch(() => {});
+  ["pointerdown", "touchend", "keydown", "click"].forEach(e => addEventListener(e, kick, true));
 
   // cover names animate in as soon as the page loads
-  requestAnimationFrame(() => $("#cover").classList.add("play"));
+  void $("#cover").offsetWidth; // commit the hidden start state first
+  setTimeout(() => $("#cover").classList.add("play"), 30);
 
   $("#openBtn").addEventListener("click", () => {
     $("#cover").classList.add("open");

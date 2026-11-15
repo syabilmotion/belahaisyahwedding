@@ -11,7 +11,7 @@ window.WEDDING = {
     { a: "Aisyah", b: "Syabil", full: ["Siti Aisyah Binti Idris", "Muhammad Syabil Jihad Bin Khairi Khalid"] }
   ],
 
-  host: "Idris Bin Ismail & Keluarga",
+  host: "Haji Idris Bin Ismail & Keluarga",
   hostNote: "(Wakil Allahyarhamah Masita Abd Rashid)",
 
   // Tarikh & masa majlis (waktu Malaysia, +08:00)
@@ -60,7 +60,7 @@ window.WEDDING = {
 
   // Letak fail lagu di assets/lagu.mp3
   song: "assets/lagu.mp3",
-  songTitle: "Lagu Pilihan Pengantin",
+  songTitle: "Maula Ya Salli Wa Sallim (Qasidah Burdah) - Piano",
 
   // Ucapan awal (kosong untuk majlis sebenar)
   seedWishes: [],
