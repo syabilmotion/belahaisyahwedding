@@ -168,9 +168,10 @@
       <filter id="near" x="-50%" y="-10%" width="200%" height="120%"><feGaussianBlur stdDeviation="5"/></filter>
     </defs>`;
     let far = "", mid = "", near = "";
-    [[30, 210], [95, 300], [150, 170], [215, 330], [270, 230], [330, 360], [385, 200]].forEach(([x, l]) => far += strand(x, l * .55, .75, "b", 1.6));
-    [[10, 260, "b"], [70, 160, "b"], [125, 230, "b"], [195, 380, "b"], [232, 300, "g"], [300, 220, "b"], [360, 280, "b"]].forEach(([x, l, t]) => mid += strand(x, l * .55, .95, t, 2.2));
-    [[-5, 330], [395, 300]].forEach(([x, l]) => near += strand(x, l * .6, 1.4, "b", 1.2));
+    // only along the left and right edges, so the middle stays clear for the text
+    [[22, 300], [62, 210], [338, 240], [380, 320]].forEach(([x, l]) => far += strand(x, l * .7, .75, "b", 1.6));
+    [[6, 360, "b"], [38, 250, "b"], [70, 170, "g"], [330, 180, "b"], [362, 270, "b"], [394, 380, "b"]].forEach(([x, l, t]) => mid += strand(x, l * .7, .95, t, 2.2));
+    [[-8, 330], [408, 300]].forEach(([x, l]) => near += strand(x, l * .6, 1.4, "b", 1.2));
     $(".wisteria").innerHTML = `<svg viewBox="0 0 400 560" preserveAspectRatio="xMidYMin slice">${defs}
       <g filter="url(#far)" opacity=".4">${far}</g>
       <g opacity=".85">${mid}</g>
