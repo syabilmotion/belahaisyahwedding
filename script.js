@@ -75,23 +75,23 @@
         for (const side of [-1, 1]) {
           const rot = tan + side * 32, len = side === 1 ? 13 : 11;
           g += `<g transform="translate(${f(x)} ${f(y)}) rotate(${f(rot)})"><g class="lf" style="--i:${i++}">` +
-            `<path d="M0 0 C${f(len * .25)} -${f(len * .32)} ${f(len * .7)} -${f(len * .34)} ${len} 0 C${f(len * .7)} ${f(len * .34)} ${f(len * .25)} ${f(len * .32)} 0 0Z" fill="#fffaf0" stroke="#a07e3c" stroke-width=".42"/>` +
-            `<path d="M.5 0 L${f(len * .85)} 0" stroke="#a07e3c" stroke-width=".3"/></g></g>`;
+            `<path d="M0 0 C${f(len * .25)} -${f(len * .32)} ${f(len * .7)} -${f(len * .34)} ${len} 0 C${f(len * .7)} ${f(len * .34)} ${f(len * .25)} ${f(len * .32)} 0 0Z" fill="#fbfdf8" stroke="#6a8763" stroke-width=".42"/>` +
+            `<path d="M.5 0 L${f(len * .85)} 0" stroke="#6a8763" stroke-width=".3"/></g></g>`;
         }
       }
       [-48, 10, 64, 104].forEach(a => {
         const [x, y] = P(a, 70);
         let fl = "";
-        for (let k = 0; k < 5; k++) fl += `<circle cx="${f(x + 2.6 * Math.cos(k * 1.2566))}" cy="${f(y + 2.6 * Math.sin(k * 1.2566))}" r="2.2" fill="#fffaf0" stroke="#a07e3c" stroke-width=".45"/>`;
-        g += `<g class="lf fl" style="--i:${i++}">${fl}<circle cx="${f(x)}" cy="${f(y)}" r="1" fill="#a07e3c"/></g>`;
+        for (let k = 0; k < 5; k++) fl += `<circle cx="${f(x + 2.6 * Math.cos(k * 1.2566))}" cy="${f(y + 2.6 * Math.sin(k * 1.2566))}" r="2.2" fill="#fbfdf8" stroke="#6a8763" stroke-width=".45"/>`;
+        g += `<g class="lf fl" style="--i:${i++}">${fl}<circle cx="${f(x)}" cy="${f(y)}" r="1" fill="#6a8763"/></g>`;
       });
-      return `<path d="${arc(-62, 112, 66)}" fill="none" stroke="#a07e3c" stroke-width=".6"/>${g}`;
+      return `<path d="${arc(-62, 112, 66)}" fill="none" stroke="#6a8763" stroke-width=".6"/>${g}`;
     }
     const mirror = inner => `<g transform="translate(200 0) scale(-1 1)">${inner}</g>`;
     $(".monos").innerHTML = C.couples.map((c, n) => {
       const flip = n % 2 === 1, id = "mono-arc-" + n;
       const textArc = flip ? arc(232, 372, 76) : arc(168, 308, 76);
-      const lineEl = `<path d="${arc(140, 168, 76)}" fill="none" stroke="#a07e3c" stroke-width=".6"/>`;
+      const lineEl = `<path d="${arc(140, 168, 76)}" fill="none" stroke="#6a8763" stroke-width=".6"/>`;
       return `<svg class="mono ${flip ? "right" : "left"}" viewBox="0 0 200 200" role="img" aria-label="${esc(c.a)} & ${esc(c.b)}">
         <defs><path id="${id}" d="${textArc}"/></defs>
         <g class="mono-wreath">${flip ? mirror(laurel()) : laurel()}</g>
