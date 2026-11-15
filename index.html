@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700&family=Alex+Brush&family=Amiri:wght@400;700&family=Cinzel+Decorative&family=Pinyon+Script&family=Prata&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=4">
 </head>
 <body class="locked">
 
@@ -24,30 +24,6 @@
     <div class="fl fl-tr"></div>
     <div class="fl fl-bl"></div>
     <div id="bokeh"></div>
-  </div>
-
-  <!-- ============ DOOR INTRO ============ -->
-  <div id="door">
-    <div class="leaf leaf-l"></div>
-    <div class="leaf leaf-r"></div>
-    <button id="doorBtn" type="button" aria-label="Buka pintu">
-      <svg viewBox="-50 -50 100 100" aria-hidden="true">
-        <defs>
-          <radialGradient id="petal" cx="50%" cy="35%" r="70%">
-            <stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#f4f4f4"/><stop offset="1" stop-color="#d6d6d6"/>
-          </radialGradient>
-          <filter id="pshadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity=".22"/></filter>
-        </defs>
-        <g filter="url(#pshadow)">
-          <ellipse rx="15" ry="20" cy="-22" fill="url(#petal)"/>
-          <ellipse rx="15" ry="20" cy="-22" fill="url(#petal)" transform="rotate(72)"/>
-          <ellipse rx="15" ry="20" cy="-22" fill="url(#petal)" transform="rotate(144)"/>
-          <ellipse rx="15" ry="20" cy="-22" fill="url(#petal)" transform="rotate(216)"/>
-          <ellipse rx="15" ry="20" cy="-22" fill="url(#petal)" transform="rotate(288)"/>
-          <circle r="11" fill="#fff"/>
-        </g>
-      </svg>
-    </button>
   </div>
 
   <!-- ============ COVER ============ -->
@@ -255,7 +231,7 @@
   <audio id="bgm" loop preload="none"></audio>
 </div>
 
-<script src="config.js"></script>
-<script src="script.js"></script>
+<script src="config.js?v=4"></script>
+<script src="script.js?v=4"></script>
 </body>
 </html>

@@ -17,15 +17,69 @@
 
   /* ---------- Couples ---------- */
   const shortHTML = C.couples.map(c =>
-    `<p class="c-couple"><span>${esc(c.a)}</span> <i>&amp;</i> <span>${esc(c.b)}</span></p>`).join("");
+    `<p class="c-couple"><span class="split">${esc(c.a)}</span> <i class="amp">&amp;</i> <span class="split">${esc(c.b)}</span></p>`).join("");
   $$(".couples-short").forEach(el => el.innerHTML = shortHTML);
   $(".couples-full").innerHTML = C.couples.map(c =>
     `<div class="couple"><p class="deco">${esc(c.full[0])}</p><p class="deco amp">&amp;</p><p class="deco">${esc(c.full[1])}</p></div>`
   ).join('<div class="divider"></div>');
-  // stagger hero lines
-  $$(".hero > *, .hero .c-couple").forEach((el, i) => el.style.setProperty("--d", (0.6 + i * 0.22) + "s"));
   if (!C.programme.length) $("#timeline").closest("section").remove();
   if (!C.hashtag) $(".hashtag").remove();
+
+  /* ---------- Motion helpers ---------- */
+  // wrap each letter so it can rise + blur in on its own
+  function split(el) {
+    if (el.dataset.split) return 0;
+    el.dataset.split = 1;
+    const text = el.textContent;
+    el.setAttribute("aria-label", text);
+    el.textContent = "";
+    let n = 0;
+    for (const word of text.split(/(\s+)/)) {
+      if (!word) continue;
+      if (/^\s+$/.test(word)) { const s = document.createElement("span"); s.className = "ch sp"; s.innerHTML = "&nbsp;"; s.style.setProperty("--i", n++); s.setAttribute("aria-hidden", "true"); el.appendChild(s); continue; }
+      const w = document.createElement("span");
+      w.style.whiteSpace = "nowrap"; w.setAttribute("aria-hidden", "true");
+      for (const ch of word) { const s = document.createElement("span"); s.className = "ch"; s.textContent = ch; s.style.setProperty("--i", n++); w.appendChild(s); }
+      el.appendChild(w);
+    }
+    return n;
+  }
+  // choreograph a title block: title → couples (letters, overlapping) → date → button
+  function choreo(root, start) {
+    let t = start;
+    const title = $(".c-title", root);
+    split(title); title.style.setProperty("--base", t + "s"); t += 0.35;
+    $$(".c-couple", root).forEach(line => {
+      const [a, b] = $$(".split", line), amp = $(".amp", line);
+      const na = split(a); a.style.setProperty("--base", t + "s");
+      amp.style.setProperty("--base", (t + na * 0.042 + 0.05) + "s");
+      split(b); b.style.setProperty("--base", (t + na * 0.042 + 0.2) + "s");
+      t += 0.42; // next line starts before this one lands
+    });
+    const date = $(".c-date", root);
+    date.classList.add("fx"); date.style.setProperty("--base", (t + 0.35) + "s");
+    const btn = $("#openBtn", root);
+    if (btn) btn.style.setProperty("--base", (t + 0.9) + "s");
+  }
+  choreo($("#cover"), 0.4);    // plays on page load
+  choreo($(".hero"), 0.55);    // plays after BUKA
+
+  // section children: each element enters on its own, overlapping
+  $$(".sec.reveal").forEach(sec => {
+    const items = [];
+    [...sec.children].forEach(el => {
+      if (el.matches(".couples-full, .countdown, .stats")) items.push(...el.children);
+      else if (el.matches(".wishes-wrap")) items.push(el);
+      else if (el.matches(".timeline")) items.push(...el.children);
+      else if (el.matches(".cta-row")) items.push(...el.children);
+      else items.push(el);
+    });
+    items.forEach((el, i) => {
+      const d = (i * 0.11) + "s";
+      if (el.matches(".h")) { split(el); el.style.setProperty("--base", d); } // headings spell themselves in
+      else { el.classList.add("rv"); el.style.setProperty("--d", d); }
+    });
+  });
 
   // Guest name via ?to=Nama
   const to = new URLSearchParams(location.search).get("to");
@@ -137,17 +191,14 @@
   audio.addEventListener("pause", () => setPlaying(false));
   const toggleMusic = () => audio.paused ? audio.play().catch(() => toast("Letak lagu di assets/lagu.mp3")) : audio.pause();
 
-  $("#doorBtn").addEventListener("click", () => {
-    const door = $("#door");
-    door.classList.add("open");
-    audio.play().catch(() => {});
-    setTimeout(() => door.classList.add("gone"), 1900);
-  });
+  // cover names animate in as soon as the page loads
+  requestAnimationFrame(() => $("#cover").classList.add("play"));
 
   $("#openBtn").addEventListener("click", () => {
     $("#cover").classList.add("open");
     document.body.classList.remove("locked");
     document.body.classList.add("opened");
+    $(".hero").classList.add("play");
     window.scrollTo(0, 0);
     audio.play().catch(() => {});
   });
@@ -155,7 +206,9 @@
   window.addEventListener("scroll", () => document.body.classList.toggle("scrolled", scrollY > innerHeight * .5), { passive: true });
 
   /* ---------- Reveal on scroll ---------- */
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .15 });
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add("in"); e.target.dispatchEvent(new Event("revealed")); io.unobserve(e.target); }
+  }), { threshold: .12, rootMargin: "0px 0px -8% 0px" });
   $$(".reveal").forEach(el => io.observe(el));
 
   /* ---------- Swatches + timeline ---------- */
@@ -169,12 +222,32 @@
     const d = Math.floor(diff / 86400); diff -= d * 86400;
     const h = Math.floor(diff / 3600); diff -= h * 3600;
     const m = Math.floor(diff / 60), s = Math.floor(diff - m * 60);
-    $("#cd-d").textContent = pad(d); $("#cd-h").textContent = pad(h);
-    $("#cd-m").textContent = pad(m); $("#cd-s").textContent = pad(s);
+    [["#cd-d", d], ["#cd-h", h], ["#cd-m", m], ["#cd-s", s]].forEach(([id, v]) => {
+      const el = $(id), txt = pad(v);
+      if (el.textContent === txt) return;
+      el.textContent = txt;
+      el.classList.remove("tick"); void el.offsetWidth; el.classList.add("tick");
+    });
   }
   tick(); setInterval(tick, 1000);
 
   /* ---------- Wishes + stats ---------- */
+  // numbers count up (ease-out) once their section is on screen
+  function countTo(el, to) {
+    el.dataset.to = to;
+    const sec = el.closest(".sec");
+    const run = () => {
+      const from = +el.textContent || 0, t0 = performance.now(), dur = 1800;
+      const step = now => {
+        const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 4);
+        el.textContent = Math.round(from + (to - from) * e);
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    if (sec.classList.contains("in")) run();
+    else { el.textContent = 0; sec.addEventListener("revealed", run, { once: true }); }
+  }
   function renderWishes() {
     const mine = store.get("rsvps", []);
     const list = [...mine.filter(x => x.wish).map(x => [x.wish, x.name]).reverse(), ...C.seedWishes];
@@ -187,7 +260,7 @@
     box.style.animationDuration = Math.max(20, list.length * 5) + "s";
     const yes = C.seedStats.yes + mine.filter(x => x.attend).length;
     const no = C.seedStats.no + mine.filter(x => !x.attend).length;
-    $("#st-yes").textContent = yes; $("#st-no").textContent = no;
+    countTo($("#st-yes"), yes); countTo($("#st-no"), no);
   }
   renderWishes();
 
