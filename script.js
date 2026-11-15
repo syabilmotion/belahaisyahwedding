@@ -138,7 +138,7 @@
   bgImg.onload = () => { $(".bg-photo").style.backgroundImage = "url(assets/bg.jpg)"; };
   bgImg.src = "assets/bg.jpg";
   const ph = new Image();
-  ph.onload = () => { const p = $(".photo"); p.style.backgroundImage = "url(assets/photo.jpg)"; p.classList.add("has-img"); };
+  ph.onload = () => { const p = $(".photo"); if (!p) return; p.style.backgroundImage = "url(assets/photo.jpg)"; p.classList.add("has-img"); };
   ph.src = "assets/photo.jpg";
   $("#cover").style.background = "transparent";
 

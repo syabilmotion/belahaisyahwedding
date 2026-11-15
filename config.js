@@ -11,12 +11,12 @@ window.WEDDING = {
     { a: "Aisyah", b: "Syabil", full: ["Siti Aisyah Binti Haji Idris", "Muhammad Syabil Jihad Bin Khairi Khalid"] }
   ],
 
-  host: "Haji Idris Bin Ismail & Keluarga",
+  host: "Haji Idris Bin Haji Ismail & Keluarga",
   hostNote: "(Wakil Allahyarhamah Hajah Masita Abd Rashid)",
 
   // Tarikh & masa majlis (waktu Malaysia, +08:00)
-  start: "2026-12-12T09:00:00+08:00",
-  end:   "2026-12-12T14:00:00+08:00",
+  start: "2026-12-12T10:30:00+08:00",
+  end:   "2026-12-12T15:00:00+08:00",
   coverDate: "12 . 12 . 2026",
   dayName: "SABTU",
   dayNum: "12",
@@ -25,10 +25,11 @@ window.WEDDING = {
   heroDate: "12 . 12 . 2026",
   dateLong: "Sabtu, 12 Disember 2026",
   hijri: "3 Rejab 1448H",
-  time: "9:00 pagi - 2:00 petang",
+  time: "10:30 pagi - 3:00 petang",
 
   venue: "Crystal White Event Hall",
   address: "Klang, Selangor",
+  parkingNote: "Nota: Parkir dikenakan bayaran",
   mapsQuery: "Crystal White Event Hall Klang",
 
   // Kosongkan [] untuk sembunyikan seksyen Atur Cara
@@ -40,8 +41,9 @@ window.WEDDING = {
   hashtag: "", // cth "#MajlisKeluargaIdris" — kosong = disembunyikan
 
   contacts: [
-    { name: "Ahmad", role: "Bapa", phone: "60123456789" },
-    { name: "Fateh", role: "Abang", phone: "60123456789" }
+    { name: "Muhammad", role: "", phone: "601121318039" },
+    { name: "Mu'az", role: "", phone: "601110855830" },
+    { name: "Iqbal", role: "", phone: "60133688629" }
   ],
 
   banks: [

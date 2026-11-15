@@ -315,9 +315,9 @@ body.opened #dock{transform:translate(-50%,0)}
   --gold:#7f9a78;
   --gold-2:#c3d3b8;
   --gold-3:#4f6b4a;
-  --ink:#33402f;
-  --ink-soft:#33402f;
-  --muted:#6f7d68;
+  --ink:#24301f;
+  --ink-soft:#24301f;
+  --muted:#4e5d48;
   --line:rgba(127,154,120,.38);
   --card:#fdfefb;
   --shadow:0 12px 30px rgba(60,80,55,.10);
@@ -493,3 +493,20 @@ body{background:#e3e8da;color:var(--ink);font-family:"Cormorant Garamond",Georgi
 /* breathing room between the doa and the thank-you */
 .foot-kicker{margin-top:64px;position:relative}
 .foot-kicker::before{content:"";display:block;width:60px;height:1px;margin:0 auto 26px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+/* ---------- easier to read: heavier text throughout ---------- */
+body{font-weight:600;font-size:19px}
+.t-body,.invite,.closing,.salam-ms,.host-note,.hijri-it,.c-hijri,#rsvpForm input,#rsvpForm textarea,
+.wishes .w p,.wishes .empty,.row p,.contact p,.bank,.wish-item p,.sheet .t-body{font-weight:600}
+.t-body{font-size:19px}
+.invite,.closing{font-style:italic;font-weight:600;color:var(--ink)}
+.host-note{font-size:16px;color:var(--ink)}
+.kicker,.c-label,.hero .c-title,.date-day,.date-month,.lbl,.wish-total,.foot-date,#cover .c-date,.hero .c-date,.countdown span{font-weight:700;color:var(--ink)}
+.kicker,.c-label,.hero .c-title{font-size:12.5px}
+#cover .c-date,.hero .c-date,.foot-date{font-size:15px}
+.venue{font-weight:700}
+.countdown b,.date-ring span{font-weight:600}
+.c-kicker{font-weight:700}
+.mono-name{font-weight:700}
+.parking{margin-top:6px;font-size:16px;font-style:italic;font-weight:700;color:#8a4b2a}
+.sheet .parking{text-align:center}
