@@ -514,3 +514,20 @@ body{font-weight:600;font-size:19px}
 /* script names and monogram letters stay regular (they were inheriting the bold body text) */
 .c-couple,.c-couple .ch,.c-couple i.amp,.foot-names,.stitle,.mono-l1,.mono-l2{font-weight:400}
 .salam-ms{margin-top:16px}
+
+/* ---------- cover: wider zig-zag so the stack is shorter; button sits in the flow ---------- */
+.mono.left{transform:translateX(-30%)}
+.mono.right{transform:translateX(30%)}
+.mono + .mono{margin-top:calc(min(50vw,210px,21vh) * -.42)}
+#cover{flex-direction:column}
+#openBtn{position:relative;bottom:auto;left:auto;transform:none;margin-top:20px}
+.mono{width:min(52vw,220px,24vh)}
+.mono + .mono{margin-top:calc(min(52vw,220px,24vh) * -.38)}
+.mono{width:min(52vw,220px,23vh)}
+.mono + .mono{margin-top:calc(min(52vw,220px,23vh) * -.38)}
+@media (max-height:740px){
+  .sprig-top,.sprig-bot{width:min(58%,220px)}
+  .sprig-top{top:20px}
+  .sprig-bot{bottom:16px}
+  #openBtn{margin-top:14px}
+}
