@@ -61,7 +61,52 @@
     const btn = $("#openBtn", root);
     if (btn) btn.style.setProperty("--base", (t + 0.9) + "s");
   }
-  choreo($("#cover"), 0.4);    // plays on page load
+  /* ---------- Cover monograms: initials + curved names + half laurel ---------- */
+  (function monograms() {
+    const P = (deg, rad) => { const a = deg * Math.PI / 180; return [100 + rad * Math.cos(a), 100 + rad * Math.sin(a)]; };
+    const f = n => n.toFixed(2);
+    const arc = (a0, a1, rad) => { const [x0, y0] = P(a0, rad), [x1, y1] = P(a1, rad); return `M${f(x0)} ${f(y0)} A${rad} ${rad} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${f(x1)} ${f(y1)}`; };
+    // half laurel on the right-hand side, leaves pointing up the curve
+    function laurel() {
+      let g = "", i = 0;
+      for (let a = 112; a >= -62; a -= 8.5) {
+        const [x, y] = P(a, 66);
+        const tan = a - 90;
+        for (const side of [-1, 1]) {
+          const rot = tan + side * 32, len = side === 1 ? 13 : 11;
+          g += `<g transform="translate(${f(x)} ${f(y)}) rotate(${f(rot)})"><g class="lf" style="--i:${i++}">` +
+            `<path d="M0 0 C${f(len * .25)} -${f(len * .32)} ${f(len * .7)} -${f(len * .34)} ${len} 0 C${f(len * .7)} ${f(len * .34)} ${f(len * .25)} ${f(len * .32)} 0 0Z" fill="#fff" stroke="#3a3a3a" stroke-width=".42"/>` +
+            `<path d="M.5 0 L${f(len * .85)} 0" stroke="#3a3a3a" stroke-width=".3"/></g></g>`;
+        }
+      }
+      [-48, 10, 64, 104].forEach(a => {
+        const [x, y] = P(a, 70);
+        let fl = "";
+        for (let k = 0; k < 5; k++) fl += `<circle cx="${f(x + 2.6 * Math.cos(k * 1.2566))}" cy="${f(y + 2.6 * Math.sin(k * 1.2566))}" r="2.2" fill="#fff" stroke="#2b2b2b" stroke-width=".45"/>`;
+        g += `<g class="lf fl" style="--i:${i++}">${fl}<circle cx="${f(x)}" cy="${f(y)}" r="1" fill="#2b2b2b"/></g>`;
+      });
+      return `<path d="${arc(-62, 112, 66)}" fill="none" stroke="#2b2b2b" stroke-width=".6"/>${g}`;
+    }
+    const mirror = inner => `<g transform="translate(200 0) scale(-1 1)">${inner}</g>`;
+    $(".monos").innerHTML = C.couples.map((c, n) => {
+      const flip = n % 2 === 1, id = "mono-arc-" + n;
+      const textArc = flip ? arc(232, 372, 76) : arc(168, 308, 76);
+      const lineEl = `<path d="${arc(140, 168, 76)}" fill="none" stroke="#2b2b2b" stroke-width=".6"/>`;
+      return `<svg class="mono ${flip ? "right" : "left"}" viewBox="0 0 200 200" role="img" aria-label="${esc(c.a)} & ${esc(c.b)}">
+        <defs><path id="${id}" d="${textArc}"/></defs>
+        <g class="mono-wreath">${flip ? mirror(laurel()) : laurel()}</g>
+        <g class="mono-line">${flip ? mirror(lineEl) : lineEl}</g>
+        <text class="mono-name"><textPath href="#${id}" startOffset="50%" text-anchor="middle">- ${esc(c.a.toUpperCase())} &amp; ${esc(c.b.toUpperCase())} -</textPath></text>
+        <text class="mono-l1" x="${flip ? 86 : 78}" y="118" text-anchor="middle">${esc(c.a[0])}</text>
+        <text class="mono-l2" x="${flip ? 128 : 124}" y="138" text-anchor="middle">${esc(c.b[0])}</text>
+      </svg>`;
+    }).join("");
+    // each monogram in turn, overlapping
+    $$(".mono").forEach((m, n) => m.style.setProperty("--base", (0.3 + n * 0.55) + "s"));
+    const k = $(".c-kicker"); k.classList.add("fx"); k.style.setProperty("--base", "2.0s");
+    const cd = $("#cover .c-date"); cd.classList.add("fx"); cd.style.setProperty("--base", "2.3s");
+    $("#openBtn").style.setProperty("--base", "2.8s");
+  })();
   choreo($(".hero"), 0.55);    // plays after BUKA
 
   // section children: each element enters on its own, overlapping
@@ -85,86 +130,56 @@
   const to = new URLSearchParams(location.search).get("to");
   if (to) $("#guestName").textContent = to;
 
-  /* ---------- Background: arched hallway ---------- */
-  (function drawHall() {
-    const svg = $(".hall");
-    const cx = 200, vpY = 400;
-    const grad = (id, a, b) => `<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`;
-    let defs = `<defs>${grad("sky", "#f7f7f6", "#ffffff")}${grad("floor", "#f2f2f1", "#e4e4e2")}
-      <radialGradient id="glow" cx=".5" cy=".46" r=".5"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>`;
-    let out = defs + `<rect width="400" height="860" fill="#e9e9e7"/>`;
-    // side walls fading toward vanishing point
-    out += `<path d="M-60 -60 L${cx} ${vpY - 8} L-60 920Z" fill="#e4e4e2"/><path d="M460 -60 L${cx} ${vpY - 8} L460 920Z" fill="#efefed"/>`;
-    // floor
-    out += `<path d="M-260 860 L${cx - 4} ${vpY + 6} L${cx + 4} ${vpY + 6} L660 860Z" fill="url(#floor)"/>`;
-    const arch = (L, R, bottom, spring, apex) => {
-      const w = R - L, h = spring - apex;
-      return `M${L} ${bottom} L${L} ${spring} C${L} ${spring - h * .55} ${cx - w * .14} ${apex + h * .12} ${cx} ${apex} C${cx + w * .14} ${apex + h * .12} ${R} ${spring - h * .55} ${R} ${spring} L${R} ${bottom}`;
-    };
-    const layers = 12;
-    for (let i = layers - 1; i >= 0; i--) {
-      const t = i / (layers - 1);
-      const s = Math.pow(1 - t * 0.95, 1.7) + 0.03;
-      const w = 300 * s, bottom = vpY + 470 * s, spring = vpY - 110 * s, apex = vpY - 320 * s;
-      const th = 34 * s; // ring thickness
-      const L = cx - w / 2, R = cx + w / 2;
-      const inner = arch(L, R, bottom, spring, apex);
-      const outer = arch(L - th, R + th, bottom, spring - th * .3, apex - th * 1.2);
-      const shade = Math.round(240 + t * 14);
-      out += `<path fill-rule="evenodd" fill="rgb(${shade},${shade},${shade - 1})" d="${outer}Z ${inner}Z"/>`;
-      out += `<path d="${inner}" fill="none" stroke="rgba(0,0,0,${(0.07 - t * 0.06).toFixed(3)})" stroke-width="${(5 * s).toFixed(2)}"/>`;
-      out += `<path d="${outer}" fill="none" stroke="rgba(0,0,0,${(0.05 - t * 0.045).toFixed(3)})" stroke-width="${(2 * s).toFixed(2)}"/>`;
-      // pillar base shadow on floor
-      out += `<ellipse cx="${L - th / 2}" cy="${bottom}" rx="${th}" ry="${3 * s}" fill="rgba(0,0,0,.05)"/><ellipse cx="${R + th / 2}" cy="${bottom}" rx="${th}" ry="${3 * s}" fill="rgba(0,0,0,.05)"/>`;
-    }
-    out += `<ellipse cx="200" cy="420" rx="160" ry="260" fill="url(#glow)" opacity=".7"/>`;
-    // far door
-    out += `<path d="M194 412 V398 C194 392 200 389 200 389 C200 389 206 392 206 398 V412Z" fill="#fff"/>`;
-    svg.innerHTML = out;
-  })();
-
-  /* ---------- Background: paper waves + baby's breath ---------- */
+  /* ---------- Background: hanging wisteria, falling petals, butterflies ---------- */
   function rng(seed) { return () => (seed = (seed * 16807) % 2147483647) / 2147483647; }
-  function floret(x, y, r, rnd) {
-    let g = "";
-    for (let k = 0; k < 5; k++) {
-      const a = (k / 5) * Math.PI * 2 + rnd();
-      g += `<circle cx="${(x + Math.cos(a) * r * .55).toFixed(1)}" cy="${(y + Math.sin(a) * r * .55).toFixed(1)}" r="${(r * .55).toFixed(1)}" fill="#fdfdfd" stroke="#a9b8bf" stroke-width=".35"/>`;
-    }
-    g += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(r * .32).toFixed(1)}" fill="#8fa0a6"/>`;
-    return g;
-  }
-  function cluster(points, seed, density) {
-    const rnd = rng(seed);
-    let stems = "", flowers = "";
-    points.forEach(([px, py, spread]) => {
-      for (let n = 0; n < density; n++) {
-        const bx = px + (rnd() - .5) * spread, by = py + (rnd() - .5) * spread;
-        const sprigs = 7 + Math.floor(rnd() * 7);
-        for (let j = 0; j < sprigs; j++) {
-          const a = rnd() * Math.PI * 2, len = 3 + rnd() * 13;
-          const fx = bx + Math.cos(a) * len, fy = by + Math.sin(a) * len;
-          stems += `M${bx.toFixed(1)} ${by.toFixed(1)} Q${((bx + fx) / 2 + (rnd() - .5) * 6).toFixed(1)} ${((by + fy) / 2).toFixed(1)} ${fx.toFixed(1)} ${fy.toFixed(1)}`;
-          flowers += floret(fx, fy, 2.2 + rnd() * 2.2, rnd);
+  (function drawWisteria() {
+    const rnd = rng(11);
+    const f = n => n.toFixed(1);
+    // one strand: a stem hanging from the top with petals in alternating pairs,
+    // getting smaller towards the tip
+    function strand(x, len, s, tint, sway) {
+      const bend = (rnd() - .5) * 24;
+      const pt = t => {               // point on the stem (quadratic curve)
+        const y = -10 + t * len, mx = x + bend * 2 * t * (1 - t) + bend * .3 * t;
+        return [mx, y];
+      };
+      let petals = "";
+      const steps = Math.round(len / (12 * s));
+      for (let i = 2; i <= steps; i++) {
+        const t = i / steps, [px, py] = pt(t);
+        const size = s * (1.25 - t * .75);
+        for (const side of [-1, 1]) {
+          if (t > .93 && side === 1) continue;
+          const a = side * (35 + rnd() * 30) + (rnd() - .5) * 10;
+          petals += `<use href="#pt-${tint}" transform="translate(${f(px)} ${f(py)}) rotate(${f(a)}) scale(${f(size)})"/>`;
         }
       }
-    });
-    return `<path d="${stems}" stroke="#7d8d86" stroke-width=".4" fill="none" opacity=".6"/>${flowers}`;
-  }
-  const shadow = `<filter id="ps" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="-3" dy="4" stdDeviation="5" flood-opacity=".14"/></filter>`;
-  $(".fl-tr").innerHTML = `<svg viewBox="0 0 300 450" preserveAspectRatio="xMaxYMin slice"><defs>${shadow}</defs>
-    ${cluster([[95, 10, 40], [125, 55, 46], [160, 110, 44], [190, 170, 46], [205, 230, 44], [220, 290, 40], [240, 340, 30]], 7, 3)}
-    <path filter="url(#ps)" fill="#f6f6f5" d="M150 -10 C170 40 230 50 245 110 C258 165 228 210 250 265 C266 305 300 320 310 340 L320 -10Z"/>
-    <path filter="url(#ps)" fill="#fbfbfa" d="M210 -10 C220 40 270 60 268 120 C266 170 250 210 285 260 L320 270 L320 -10Z"/>
-  </svg>`;
-  $(".fl-bl").innerHTML = `<svg viewBox="0 0 400 380" preserveAspectRatio="xMinYMax slice"><defs>${shadow}</defs>
-    ${cluster([[20, 40, 40], [45, 100, 46], [90, 160, 46], [140, 220, 46], [190, 270, 44], [240, 310, 40], [290, 345, 34]], 21, 3)}
-    <path filter="url(#ps)" fill="#f6f6f5" d="M-10 80 C30 120 20 190 70 240 C120 290 170 290 220 330 C250 352 270 372 280 400 L-10 400Z"/>
-    <path filter="url(#ps)" fill="#fbfbfa" d="M-10 200 C30 240 50 300 110 330 C150 350 170 370 175 400 L-10 400Z"/>
-  </svg>`;
-  // optional: assets/bg.jpg replaces drawn hallway
+      const [ex, ey] = pt(1), [cx1, cy1] = pt(.5);
+      const stem = `<path d="M${f(x)} -10 Q${f(cx1 + (cx1 - (x + ex) / 2))} ${f(cy1)} ${f(ex)} ${f(ey)}" stroke="${tint === "g" ? "#6f9a55" : "#7c6a5c"}" stroke-width="${f(1.1 * s)}" fill="none" opacity=".7"/>`;
+      return `<g class="strand" style="--sw:${f(sway)}deg;animation-duration:${f(6 + rnd() * 5)}s;animation-delay:-${f(rnd() * 8)}s">${stem}${petals}</g>`;
+    }
+    const petalDefs = (id, a, b, line) => `
+      <linearGradient id="g-${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>
+      <path id="pt-${id}" d="M0 0 C4 1 8 6 7.5 12 C7 16 2.5 17 .5 14 C-1.5 11 -1.5 5 0 0Z" fill="url(#g-${id})" stroke="${line}" stroke-width=".45"/>`;
+    const defs = `<defs>
+      ${petalDefs("b", "#e4f3fa", "#86bcd8", "#4f86a6")}
+      ${petalDefs("g", "#eef7e4", "#9cc98a", "#5d8f48")}
+      <filter id="far" x="-50%" y="-10%" width="200%" height="120%"><feGaussianBlur stdDeviation="3.2"/></filter>
+      <filter id="near" x="-50%" y="-10%" width="200%" height="120%"><feGaussianBlur stdDeviation="5"/></filter>
+    </defs>`;
+    let far = "", mid = "", near = "";
+    [[30, 210], [95, 300], [150, 170], [215, 330], [270, 230], [330, 360], [385, 200]].forEach(([x, l]) => far += strand(x, l * .55, .75, "b", 1.6));
+    [[10, 260, "b"], [70, 160, "b"], [125, 230, "b"], [195, 380, "b"], [232, 300, "g"], [300, 220, "b"], [360, 280, "b"]].forEach(([x, l, t]) => mid += strand(x, l * .55, .95, t, 2.2));
+    [[-5, 330], [395, 300]].forEach(([x, l]) => near += strand(x, l * .6, 1.4, "b", 1.2));
+    $(".wisteria").innerHTML = `<svg viewBox="0 0 400 560" preserveAspectRatio="xMidYMin slice">${defs}
+      <g filter="url(#far)" opacity=".4">${far}</g>
+      <g opacity=".85">${mid}</g>
+      <g filter="url(#near)" opacity=".6">${near}</g></svg>`;
+  })();
+
+  // optional: assets/bg.jpg replaces the drawn background
   const bgImg = new Image();
-  bgImg.onload = () => { $(".bg-photo").style.backgroundImage = "url(assets/bg.jpg)"; $(".hall").style.display = "none"; };
+  bgImg.onload = () => { $(".bg-photo").style.backgroundImage = "url(assets/bg.jpg)"; $(".wisteria").style.display = "none"; };
   bgImg.src = "assets/bg.jpg";
   const ph = new Image();
   ph.onload = () => { const p = $(".photo"); p.style.backgroundImage = "url(assets/photo.jpg)"; p.classList.add("has-img"); };
@@ -173,14 +188,34 @@
   // cover shares the background look
   $("#cover").style.background = "transparent";
 
-  /* ---------- Bokeh ---------- */
-  const bok = $("#bokeh"), r = rng(99);
-  for (let i = 0; i < 16; i++) {
+  /* ---------- Falling petals ---------- */
+  const fall = $("#petals"), r = rng(99);
+  for (let i = 0; i < 14; i++) {
     const d = document.createElement("i");
-    const s = 4 + r() * 14;
-    Object.assign(d.style, { width: s + "px", height: s + "px", left: r() * 100 + "%", top: 60 + r() * 60 + "%", animationDuration: 14 + r() * 18 + "s", animationDelay: -r() * 30 + "s" });
-    bok.appendChild(d);
+    const s = 7 + r() * 9;
+    Object.assign(d.style, {
+      width: s + "px", height: s * 1.4 + "px", left: r() * 100 + "%",
+      animationDuration: 13 + r() * 14 + "s", animationDelay: -r() * 25 + "s",
+      "--dx": (r() * 120 - 40) + "px", "--rot": (r() * 540 - 270) + "deg", opacity: .5 + r() * .45
+    });
+    fall.appendChild(d);
   }
+
+  /* ---------- Butterflies ---------- */
+  const wing = `<defs><linearGradient id="bw" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eaf6fb"/><stop offset=".55" stop-color="#9fd0e6"/><stop offset="1" stop-color="#4f8fb3"/></linearGradient></defs>`;
+  const half = `<path d="M-2 -2 C-16 -36 -46 -34 -44 -10 C-43 2 -22 3 -2 0Z" fill="url(#bw)" stroke="#3f7799" stroke-width=".8"/>
+    <path d="M-2 2 C-22 6 -34 26 -22 33 C-12 38 -4 20 -2 4Z" fill="url(#bw)" stroke="#3f7799" stroke-width=".8"/>
+    <path d="M-4 -3 C-14 -16 -26 -22 -36 -14 M-4 2 C-12 10 -18 18 -20 26" stroke="#3f7799" stroke-width=".5" fill="none" opacity=".6"/>`;
+  [[72, 30, 46, -18, 0], [8, 52, 36, 14, .3], [16, 58, 26, -8, .15], [80, 70, 30, 22, .45]].forEach(([left, top, size, tilt, delay], i) => {
+    const b = document.createElement("div");
+    b.className = "bf";
+    Object.assign(b.style, { left: left + "%", top: top + "%", width: size + "px", "--tilt": tilt + "deg", animationDelay: -i * 3 + "s" });
+    b.innerHTML = `<svg viewBox="-50 -40 100 80">${wing}
+      <g class="w" style="animation-delay:${delay}s">${half}</g>
+      <g transform="scale(-1 1)"><g class="w" style="animation-delay:${delay}s">${half}</g></g>
+      <ellipse rx="2.2" ry="13" cy="4" fill="#2f5d78"/></svg>`;
+    $("#bg").appendChild(b);
+  });
 
   /* ---------- Open cover + music ---------- */
   const audio = $("#bgm");
