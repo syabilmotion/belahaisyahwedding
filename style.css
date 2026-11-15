@@ -376,8 +376,8 @@ body{background:#e3e8da;color:var(--ink);font-family:"Cormorant Garamond",Georgi
 /* ---------- hero ---------- */
 .hero .c-title{font-family:"Cinzel",serif;font-size:12px;letter-spacing:.32em;color:var(--muted)}
 .c-couple{color:var(--gold-3)}
-.c-couple .ch{background:linear-gradient(160deg,#3f5a3b,#b9cfae 55%,#6a8763);-webkit-background-clip:text;background-clip:text;color:transparent;padding:0 .08em;margin:0 -.08em}
-.c-couple i.amp{color:var(--gold)}
+.c-couple .ch{background:linear-gradient(160deg,#243a22,#557050 55%,#2f472c);-webkit-background-clip:text;background-clip:text;color:transparent;padding:0 .08em;margin:0 -.08em}
+.c-couple i.amp{color:#4f6b4a}
 .hero .c-date{font-family:"Cinzel",serif;font-size:14px;letter-spacing:.34em;color:var(--ink)}
 .hero::before{content:"";position:absolute;left:50%;top:50%;width:min(78%,300px);height:min(78vh,520px);transform:translate(-50%,-56%);
   border:1px solid var(--line);border-radius:50% 50% 14px 14px / 160px 160px 14px 14px;pointer-events:none}
@@ -394,7 +394,7 @@ body{background:#e3e8da;color:var(--ink);font-family:"Cormorant Garamond",Georgi
 .host-note{color:var(--muted);font-size:15px}
 .invite{color:var(--muted);font-style:italic;max-width:340px;margin:0 auto}
 .guest{color:var(--ink)}
-.couple .deco{color:var(--gold-3)}
+.couple .deco{color:#2c4229}
 .couple .amp{color:var(--gold);font-family:"Alex Brush",cursive;font-weight:400}
 .divider{width:90px;height:9px;background:none;margin:14px auto;position:relative}
 .divider::before{content:"";position:absolute;left:0;right:0;top:4px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
