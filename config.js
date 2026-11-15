@@ -24,7 +24,7 @@ window.WEDDING = {
   footNames: "Keluarga Haji Idris",
   heroDate: "12 . 12 . 2026",
   dateLong: "Sabtu, 12 Disember 2026",
-  hijri: "2 Rejab 1448H",
+  hijri: "3 Rejab 1448H",
   time: "9:00 pagi - 2:00 petang",
 
   venue: "Crystal White Event Hall",

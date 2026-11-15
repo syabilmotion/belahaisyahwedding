@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700&family=Amiri:wght@400;700&family=Cinzel:wght@400;600&family=Cinzel+Decorative&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Alex+Brush&family=Italianno&family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;500&family=Prata&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=22">
+<link rel="stylesheet" href="style.css?v=23">
 </head>
 <body class="locked">
 
@@ -55,6 +55,7 @@
       <p class="c-title">WALIMATUL URUS</p>
       <div class="couples-short"></div>
       <p class="c-date" data-bind="heroDate"></p>
+      <p class="c-hijri fx" style="--base:2.2s" data-bind="hijri"></p>
     </section>
 
     <!-- Invitation -->
@@ -148,6 +149,7 @@
       <p class="kicker mt">TERIMA KASIH</p>
       <p class="foot-names gold-text" data-bind="footNames"></p>
       <p class="foot-date" data-bind="coverDate"></p>
+      <p class="c-hijri" data-bind="hijri"></p>
       <div class="sprig sprig-foot" aria-hidden="true"></div>
     </section>
   </main>
@@ -166,9 +168,6 @@
     <button type="button" data-open="gift" aria-label="Hadiah">
       <svg viewBox="0 0 24 24"><rect x="3.5" y="8" width="17" height="4" rx=".5"/><path d="M5 12v9h14v-9M12 8v13M12 8S10.5 3.5 8 4.2 8.5 8 12 8zm0 0s1.5-4.5 4-3.8S15.5 8 12 8z"/></svg>
     </button>
-    <button type="button" data-open="rsvp" aria-label="RSVP">
-      <svg viewBox="0 0 24 24"><path d="M3 10l9-6 9 6v10H3z"/><path d="M3 10l9 6 9-6"/><text x="12" y="12.6" text-anchor="middle" font-size="4" font-family="Arial" stroke="none" fill="currentColor">RSVP</text></svg>
-    </button>
   </nav>
 
   <!-- ============ BOTTOM SHEETS ============ -->
@@ -176,7 +175,8 @@
 
   <div class="sheet" id="sheet-calendar">
     <div class="sheet-body center">
-      <p class="t-strong" data-bind="dateLong">Ahad, 13 Disember 2026</p>
+      <p class="t-strong" data-bind="dateLong"></p>
+      <p class="t-body hijri-it" data-bind="hijri"></p>
       <p class="t-body" data-bind="time">11:00 pagi - 5:00 petang</p>
       <div class="btn-row mt">
         <a class="btn-solid" id="gcalLink" target="_blank" rel="noopener">Google Calendar</a>
@@ -260,7 +260,7 @@
   <audio id="bgm" loop autoplay preload="auto"></audio>
 </div>
 
-<script src="config.js?v=22"></script>
-<script src="script.js?v=22"></script>
+<script src="config.js?v=23"></script>
+<script src="script.js?v=23"></script>
 </body>
 </html>
