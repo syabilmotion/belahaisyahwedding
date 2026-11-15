@@ -167,15 +167,20 @@
       <filter id="far" x="-50%" y="-10%" width="200%" height="120%"><feGaussianBlur stdDeviation="3.2"/></filter>
       <filter id="near" x="-50%" y="-10%" width="200%" height="120%"><feGaussianBlur stdDeviation="5"/></filter>
     </defs>`;
-    let far = "", mid = "", near = "";
-    // only along the left and right edges, so the middle stays clear for the text
-    [[22, 300], [62, 210], [338, 240], [380, 320]].forEach(([x, l]) => far += strand(x, l * .7, .75, "b", 1.6));
-    [[6, 360, "b"], [38, 250, "b"], [70, 170, "g"], [330, 180, "b"], [362, 270, "b"], [394, 380, "b"]].forEach(([x, l, t]) => mid += strand(x, l * .7, .95, t, 2.2));
-    [[-8, 330], [408, 300]].forEach(([x, l]) => near += strand(x, l * .6, 1.4, "b", 1.2));
-    $(".wisteria").innerHTML = `<svg viewBox="0 0 400 560" preserveAspectRatio="xMidYMin slice">${defs}
-      <g filter="url(#far)" opacity=".4">${far}</g>
-      <g opacity=".85">${mid}</g>
-      <g filter="url(#near)" opacity=".6">${near}</g></svg>`;
+    // two separate clusters pinned to the left and right edges, so the
+    // middle stays clear for the text at any screen width
+    function side(farL, midL, nearL) {
+      let far = "", mid = "", near = "";
+      farL.forEach(([x, l]) => far += strand(x, l * .7, .75, "b", 1.6));
+      midL.forEach(([x, l, t]) => mid += strand(x, l * .7, .95, t, 2.2));
+      nearL.forEach(([x, l]) => near += strand(x, l * .6, 1.4, "b", 1.2));
+      return `<g filter="url(#far)" opacity=".4">${far}</g><g opacity=".85">${mid}</g><g filter="url(#near)" opacity=".6">${near}</g>`;
+    }
+    const left = side([[22, 300], [62, 210]], [[6, 360, "b"], [38, 250, "b"], [70, 170, "g"]], [[-8, 330]]);
+    const right = side([[38, 240], [80, 320]], [[30, 180, "b"], [62, 270, "b"], [94, 380, "b"]], [[108, 300]]);
+    $(".wisteria").innerHTML =
+      `<svg class="w-left" viewBox="0 0 100 560" preserveAspectRatio="xMinYMin slice">${defs}${left}</svg>` +
+      `<svg class="w-right" viewBox="0 0 100 560" preserveAspectRatio="xMaxYMin slice">${right}</svg>`;
   })();
 
   // optional: assets/bg.jpg replaces the drawn background

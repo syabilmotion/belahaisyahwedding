@@ -12,7 +12,7 @@ window.WEDDING = {
   ],
 
   host: "Haji Idris Bin Ismail & Keluarga",
-  hostNote: "(Wakil Allahyarhamah Masita Abd Rashid)",
+  hostNote: "(Wakil Allahyarhamah Hajah Masita Abd Rashid)",
 
   // Tarikh & masa majlis (waktu Malaysia, +08:00)
   start: "2026-12-12T09:00:00+08:00",
