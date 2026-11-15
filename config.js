@@ -6,9 +6,9 @@ window.WEDDING = {
 
   // Pasangan: nama pendek (cover) + nama penuh (kad)
   couples: [
-    { a: "Maryam", b: "Putra",  full: ["Siti Maryam Binti Idris", "Putra Shah Aizat Bin Hainurabahari"] },
-    { a: "Ismail", b: "Balkis", full: ["Ismail Bin Idris", "Siti Noor Balkis Binti Peermohamed"] },
-    { a: "Aisyah", b: "Syabil", full: ["Siti Aisyah Binti Idris", "Muhammad Syabil Jihad Bin Khairi Khalid"] }
+    { a: "Maryam", b: "Putra",  full: ["Siti Maryam Binti Haji Idris", "Putra Shah Aizat Bin Hainurabahari"] },
+    { a: "Ismail", b: "Balkis", full: ["Ismail Bin Haji Idris", "Siti Noor Balkis Binti Peermohamed"] },
+    { a: "Aisyah", b: "Syabil", full: ["Siti Aisyah Binti Haji Idris", "Muhammad Syabil Jihad Bin Khairi Khalid"] }
   ],
 
   host: "Haji Idris Bin Ismail & Keluarga",
