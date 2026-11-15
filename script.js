@@ -203,7 +203,11 @@
   // Play as soon as the page opens. Most phones block sound until the first
   // touch, so if that happens start on the guest's first tap / key press.
   let userPaused = false;
-  audio.addEventListener("pause", () => { if (audio.currentTime > 0) userPaused = true; });
+  let autoPausing = false; // true while we pause because the page is hidden
+  audio.addEventListener("pause", () => {
+    if (autoPausing) { autoPausing = false; return; }
+    if (audio.currentTime > 0) userPaused = true;
+  });
   const kick = e => {
     if (e.target.closest && e.target.closest("#musicBtn")) return; // music button handles itself
     if (!userPaused && audio.paused) audio.play().catch(() => {});
@@ -211,6 +215,20 @@
   };
   audio.play().catch(() => {});
   ["pointerdown", "touchend", "keydown", "click"].forEach(e => addEventListener(e, kick, true));
+
+  // Stop the music when the guest leaves the page (Home button, another app,
+  // screen locked) and carry on when they come back, if it was playing before.
+  let resumeOnReturn = false;
+  const leave = () => {
+    if (!audio.paused) { resumeOnReturn = true; autoPausing = true; audio.pause(); }
+  };
+  const back = () => {
+    if (resumeOnReturn && !userPaused) audio.play().catch(() => {});
+    resumeOnReturn = false;
+  };
+  document.addEventListener("visibilitychange", () => document.hidden ? leave() : back());
+  addEventListener("pagehide", leave);
+  addEventListener("blur", () => { if (document.hidden) leave(); });
 
   // cover names animate in as soon as the page loads
   void $("#cover").offsetWidth; // commit the hidden start state first
