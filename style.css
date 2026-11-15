@@ -513,3 +513,4 @@ body{font-weight:600;font-size:19px}
 
 /* script names and monogram letters stay regular (they were inheriting the bold body text) */
 .c-couple,.c-couple .ch,.c-couple i.amp,.foot-names,.stitle,.mono-l1,.mono-l2{font-weight:400}
+.salam-ms{margin-top:16px}
