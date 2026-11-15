@@ -55,8 +55,8 @@ body.scrolled #bg::after{opacity:1}
 #cover.open{transform:translate(-50%,-100%);opacity:0;pointer-events:none}
 .cover-inner{position:relative;text-align:center;margin-top:-8vh;color:var(--ink-soft)}
 .c-title{font-size:18px;font-weight:500;color:var(--ink-soft)}
-.c-name{font-family:"Great Vibes",cursive;font-weight:400;font-size:clamp(40px,12.6vw,56px);line-height:1.25;color:var(--ink-soft);margin:6px 0}
-.c-amp{font-family:"Great Vibes",cursive;font-size:24px;color:var(--ink-soft)}
+.c-name{font-family:"Alex Brush",cursive;font-weight:400;font-size:clamp(40px,12.6vw,56px);line-height:1.25;color:var(--ink-soft);margin:6px 0}
+.c-amp{font-family:"Alex Brush",cursive;font-size:24px;color:var(--ink-soft)}
 .c-date{font-size:18px;font-weight:500;margin-top:14px;color:var(--ink-soft)}
 #openBtn{
   position:absolute;bottom:9vh;left:50%;transform:translateX(-50%);
@@ -81,12 +81,12 @@ body.scrolled #bg::after{opacity:1}
 .play .fx{opacity:1;transform:none;filter:none}
 .c-couple i.amp{display:inline-block;opacity:0;transform:scale(.4) rotate(-20deg);transition:opacity 1s var(--ease-out),transform 1.6s var(--ease-out);transition-delay:var(--base,0s)}
 .play .c-couple i.amp{opacity:1;transform:none}
-.c-couple{font-family:"Great Vibes",cursive;font-size:clamp(30px,9vw,40px);line-height:1.35;color:var(--ink-soft);margin:4px 0}
+.c-couple{font-family:"Alex Brush",cursive;font-size:clamp(30px,9vw,40px);line-height:1.35;color:var(--ink-soft);margin:4px 0}
 .c-couple i{font-style:normal;font-size:.6em;margin:0 4px}
 .couples-short{margin:10px 0 4px}
 .bismillah{font-family:"Amiri",serif;font-size:24px;line-height:1.7;margin-top:6px}
 .host-note{font-style:italic}
-.couple .deco{font-family:"Great Vibes",cursive;font-size:clamp(24px,7vw,28px);line-height:1.35}
+.couple .deco{font-family:"Alex Brush",cursive;font-size:clamp(24px,7vw,28px);line-height:1.35}
 .couple .amp{font-size:22px}
 .divider{width:60px;height:1px;background:#999;margin:16px auto}
 .closing{max-width:320px;margin:0 auto}
@@ -99,7 +99,7 @@ body.scrolled #bg::after{opacity:1}
 .t-small{font-size:14px}
 .t-strong{font-weight:600;color:var(--ink-dark)}
 .mt{margin-top:22px}
-.script{font-family:"Great Vibes",cursive;font-size:26px;line-height:1.5}
+.script{font-family:"Alex Brush",cursive;font-size:26px;line-height:1.5}
 .deco{font-family:"Cinzel Decorative",serif;font-size:22px;line-height:1.5}
 .deco.sm{font-size:16px}
 .guest{display:block;font-family:"Prata",serif;font-weight:600;font-size:17px}
