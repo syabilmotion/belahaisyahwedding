@@ -15,7 +15,7 @@ window.WEDDING = {
   hostNote: "(Wakil Allahyarhamah Hajah Masita Abd Rashid)",
 
   // Tarikh & masa majlis (waktu Malaysia, +08:00)
-  start: "2026-12-12T10:30:00+08:00",
+  start: "2026-12-12T11:00:00+08:00",
   end:   "2026-12-12T15:00:00+08:00",
   coverDate: "12 . 12 . 2026",
   dayName: "SABTU",
@@ -25,7 +25,7 @@ window.WEDDING = {
   heroDate: "12 . 12 . 2026",
   dateLong: "Sabtu, 12 Disember 2026",
   hijri: "3 Rejab 1448H",
-  time: "10:30 pagi - 3:00 petang",
+  time: "11:00 pagi - 3:00 petang",
 
   venue: "Crystal White Event Hall",
   address: "Klang, Selangor",
