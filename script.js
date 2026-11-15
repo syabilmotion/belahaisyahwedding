@@ -12,7 +12,9 @@
   /* ---------- Bind text from config ---------- */
   $$("[data-bind]").forEach(el => { const v = C[el.dataset.bind]; if (v != null) el.textContent = v; });
   $$("[data-bind-html]").forEach(el => { const v = C[el.dataset.bindHtml]; if (v != null) el.innerHTML = v; });
-  $("[data-bind=doa]").innerHTML = C.doa;
+  $(".doa-list").innerHTML = C.doa.map(d =>
+    `<div class="doa-item"><p class="doa" lang="ar" dir="rtl">${d.ar}</p><p class="doa-ms">“${esc(d.ms)}”</p>${d.src ? `<p class="doa-src">${esc(d.src)}</p>` : ""}</div>`
+  ).join("");
   document.title = C.title;
 
   /* ---------- Couples ---------- */

@@ -37,7 +37,14 @@ window.WEDDING = {
 
   closing: "Semoga dengan kehadiran serta iringan doa restu para undangan yang dihormati akan menyerikan lagi majlis kami. InsyaAllah 🤍",
 
-  doa: "بَارَكَ اللهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا<br>وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ<br><br>اللَّهُمَّ أَلِّفْ بَيْنَهُمَا<br>كَمَا أَلَّفْتَ بَيْنَ آدَمَ وَحَوَّاءَ",
+  // Doa: teks Arab + maknanya
+  doa: [
+    { ar: "بَارَكَ اللهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا<br>وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ",
+      ms: "Semoga Allah memberkati kalian berdua, melimpahkan keberkatan ke atas kalian, dan menyatukan kalian dalam kebaikan.",
+      src: "Riwayat Abu Daud dan at-Tirmizi" },
+    { ar: "اللَّهُمَّ أَلِّفْ بَيْنَهُمَا<br>كَمَا أَلَّفْتَ بَيْنَ آدَمَ وَحَوَّاءَ",
+      ms: "Ya Allah, satukanlah hati mereka berdua sebagaimana Engkau telah menyatukan hati Nabi Adam dan Hawa." }
+  ],
   hashtag: "", // cth "#MajlisKeluargaIdris" — kosong = disembunyikan
 
   contacts: [

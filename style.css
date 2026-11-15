@@ -379,8 +379,7 @@ body{background:#e3e8da;color:var(--ink);font-family:"Cormorant Garamond",Georgi
 .c-couple .ch{background:linear-gradient(160deg,#243a22,#557050 55%,#2f472c);-webkit-background-clip:text;background-clip:text;color:transparent;padding:0 .08em;margin:0 -.08em}
 .c-couple i.amp{color:#4f6b4a}
 .hero .c-date{font-family:"Cinzel",serif;font-size:14px;letter-spacing:.34em;color:var(--ink)}
-.hero::before{content:"";position:absolute;left:50%;top:50%;width:min(78%,300px);height:min(78vh,520px);transform:translate(-50%,-56%);
-  border:1px solid var(--line);border-radius:50% 50% 14px 14px / 160px 160px 14px 14px;pointer-events:none}
+
 .hero{position:relative}
 
 /* ---------- invitation ---------- */
@@ -531,3 +530,20 @@ body{font-weight:600;font-size:19px}
   .sprig-bot{bottom:16px}
   #openBtn{margin-top:14px}
 }
+
+/* ---------- hero: the arch wraps the text instead of floating around it ---------- */
+.hero{padding:0 0 12vh}
+.hero-arch{position:relative;width:min(92%,380px);margin:0 auto;padding:clamp(54px,9vh,80px) 14px clamp(30px,5vh,46px);
+  border:1px solid var(--line);border-radius:50% 50% 18px 18px / 150px 150px 18px 18px}
+.hero-arch::after{content:"";position:absolute;inset:7px;border:1px solid rgba(127,154,120,.2);border-radius:50% 50% 13px 13px / 143px 143px 13px 13px;pointer-events:none}
+.hero .c-couple{font-size:clamp(34px,10.5vw,46px)}
+.hero .c-title{font-size:13.5px}
+.hero .c-date{font-size:17px;margin-top:16px}
+.hero .c-hijri{font-size:21px}
+
+/* ---------- doa with meaning ---------- */
+.doa-item + .doa-item{margin-top:26px;padding-top:22px;border-top:1px dashed var(--line)}
+.doa-ms{font-style:italic;font-weight:600;font-size:17px;line-height:1.5;color:var(--ink);max-width:330px;margin:8px auto 0}
+.doa-src{font-family:"Cinzel",serif;font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--muted);margin-top:6px}
+.hero .c-couple{font-size:clamp(30px,9.4vw,42px);white-space:nowrap}
+.hero-arch{width:min(94%,390px);padding-left:6px;padding-right:6px}
