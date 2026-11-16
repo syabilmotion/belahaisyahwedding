@@ -1,4 +1,9 @@
 /**
+ * @OnlyCurrentDoc
+ * (hadkan akses skrip ini kepada Sheet ini sahaja, bukan semua Sheet anda)
+ */
+
+/**
  * Kad jemputan → Google Sheets
  *
  * Tampal kod ini dalam Extensions → Apps Script pada Google Sheet anda,
