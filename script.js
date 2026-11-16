@@ -327,7 +327,6 @@
   let current = null;
   function openSheet(name) {
     if (name === "music") { toggleMusic(); return; }
-    if (name === "attend") { closeSheet(); $("#rsvp").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
     const el = $("#sheet-" + name);
     if (!el) return;
     if (current === el) return closeSheet();
@@ -421,34 +420,6 @@
     form.hidden = true; $("#rsvpThanks").hidden = false;
     renderWishes();
     setTimeout(() => { closeSheet(); form.hidden = false; $("#rsvpThanks").hidden = true; }, 1800);
-  });
-
-  /* ---------- RSVP (attendance) ---------- */
-  const aForm = $("#attendForm");
-  let going = true;
-  const setGoing = v => {
-    going = v;
-    $$("#rsvp .seg-btn").forEach(b => b.classList.toggle("active", (b.dataset.going === "1") === v));
-    aForm.classList.toggle("no", !v);
-  };
-  $$("#rsvp .seg-btn").forEach(b => b.addEventListener("click", () => setGoing(b.dataset.going === "1")));
-  $("#attendAgain").addEventListener("click", () => { aForm.hidden = false; $("#attendThanks").hidden = true; });
-  aForm.addEventListener("submit", e => {
-    e.preventDefault();
-    let ok = true;
-    $$("[required]", aForm).forEach(f => { const bad = !f.value.trim(); f.classList.toggle("invalid", bad); if (bad) ok = false; });
-    if (!ok) return toast("Sila isi nama dan nombor telefon.");
-    const d = Object.fromEntries(new FormData(aForm));
-    if (!going) { delete d.adults; delete d.kids; }
-    const list = store.get("attendance", []);
-    list.push({ ...d, going, at: Date.now() });
-    store.set("attendance", list);
-    sendToSheet({ type: "rsvp", name: d.name, phone: d.phone, going, adults: d.adults, kids: d.kids });
-    $("#attendThanksMsg").textContent = going
-      ? `Terima kasih, ${d.name}! Kami menanti kehadiran anda.`
-      : `Terima kasih, ${d.name}. Doa anda amat kami hargai.`;
-    aForm.reset(); setGoing(true);
-    aForm.hidden = true; $("#attendThanks").hidden = false;
   });
 
   /* ---------- Toast ---------- */

@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700&family=Amiri:wght@400;700&family=Cinzel:wght@500;600;700&family=Cinzel+Decorative&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Alex+Brush&family=Italianno&family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;500&family=Prata&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=41">
+<link rel="stylesheet" href="style.css?v=42">
 </head>
 <body class="locked">
 
@@ -124,38 +124,6 @@
     </section>
 
 
-    <!-- RSVP -->
-    <section class="sec reveal" id="rsvp">
-      <span class="orn"></span>
-      <p class="kicker">SAHKAN KEHADIRAN</p>
-      <h2 class="stitle"><span class="gold-text">RSVP</span></h2>
-      <div class="card rsvp-card">
-        <div class="seg" role="radiogroup">
-          <button type="button" class="seg-btn active" data-going="1">Hadir</button>
-          <button type="button" class="seg-btn" data-going="0">Tidak Hadir</button>
-        </div>
-        <form id="attendForm" novalidate>
-          <label>Nama <i>*</i><input name="name" required maxlength="80" autocomplete="name"></label>
-          <label>Nombor Telefon <i>*</i><input name="phone" type="tel" required maxlength="20" autocomplete="tel"></label>
-          <div class="if-going">
-            <label>Bilangan Dewasa
-              <select name="adults"><option>1 orang</option><option>2 orang</option><option>3 orang</option><option>4 orang</option><option>5 orang</option></select>
-            </label>
-            <label>Bilangan Kanak-kanak
-              <select name="kids"><option>Tiada</option><option>1 orang</option><option>2 orang</option><option>3 orang</option><option>4 orang</option></select>
-            </label>
-          </div>
-          <div class="btn-row">
-            <button type="submit" class="btn-solid">Hantar</button>
-          </div>
-        </form>
-        <div id="attendThanks" class="rsvp-thanks" hidden>
-          <p id="attendThanksMsg" class="t-body"></p>
-          <button type="button" class="btn-outline" id="attendAgain">Isi semula</button>
-        </div>
-      </div>
-    </section>
-
     <!-- Wishes -->
     <section class="sec reveal">
       <span class="orn"></span>
@@ -192,9 +160,6 @@
     </button>
     <button type="button" data-open="location" aria-label="Lokasi">
       <svg viewBox="0 0 24 24"><path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
-    </button>
-    <button type="button" data-open="attend" aria-label="RSVP">
-      <svg viewBox="0 0 24 24"><path d="M3 10l9-6 9 6v10H3z"/><path d="M3 10l9 6 9-6"/><text x="12" y="12.6" text-anchor="middle" font-size="4" font-family="Arial" stroke="none" fill="currentColor">RSVP</text></svg>
     </button>
   </nav>
 
@@ -276,7 +241,7 @@
   <audio id="bgm" loop autoplay preload="auto"></audio>
 </div>
 
-<script src="config.js?v=41"></script>
-<script src="script.js?v=41"></script>
+<script src="config.js?v=42"></script>
+<script src="script.js?v=42"></script>
 </body>
 </html>
