@@ -550,3 +550,14 @@ body{font-weight:600;font-size:19px}
 
 /* give each script letter room so swashes are not clipped by the gradient fill */
 .c-couple .ch{padding:.22em .3em;margin:-.22em -.3em}
+
+/* ---------- RSVP sheet ---------- */
+#attendForm label{display:block;margin-bottom:12px;font-family:"Cinzel",serif;font-size:11.5px;letter-spacing:.16em;color:var(--gold-3);font-weight:700}
+#attendForm i{color:#b0473a;font-style:normal}
+#attendForm input,#attendForm select{display:block;width:100%;margin-top:6px;padding:10px 12px;font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:600;
+  color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:12px}
+#attendForm input:focus,#attendForm select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(195,211,184,.4)}
+#attendForm .invalid{border-color:#b0473a}
+#attendForm.no .if-going{display:none}
+.rsvp-intro{margin:-4px 0 6px;font-style:italic}
+html,body{overflow-x:hidden}

@@ -379,10 +379,10 @@
   let attending = true;
   function setAttend(v) {
     attending = v;
-    $$(".seg-btn").forEach(b => b.classList.toggle("active", (b.dataset.attend === "1") === v));
+    $$("#sheet-rsvp .seg-btn").forEach(b => b.classList.toggle("active", (b.dataset.attend === "1") === v));
     form.classList.toggle("no", !v);
   }
-  $$(".seg-btn").forEach(b => b.addEventListener("click", () => setAttend(b.dataset.attend === "1")));
+  $$("#sheet-rsvp .seg-btn").forEach(b => b.addEventListener("click", () => setAttend(b.dataset.attend === "1")));
   $("#wishInput").addEventListener("input", e => $("#wishCount").textContent = e.target.value.length);
   form.addEventListener("submit", e => {
     e.preventDefault();
@@ -397,6 +397,30 @@
     form.hidden = true; $("#rsvpThanks").hidden = false;
     renderWishes();
     setTimeout(() => { closeSheet(); form.hidden = false; $("#rsvpThanks").hidden = true; }, 1800);
+  });
+
+  /* ---------- RSVP (attendance) ---------- */
+  const aForm = $("#attendForm");
+  let going = true;
+  const setGoing = v => {
+    going = v;
+    $$("#sheet-attend .seg-btn").forEach(b => b.classList.toggle("active", (b.dataset.going === "1") === v));
+    aForm.classList.toggle("no", !v);
+  };
+  $$("#sheet-attend .seg-btn").forEach(b => b.addEventListener("click", () => setGoing(b.dataset.going === "1")));
+  aForm.addEventListener("submit", e => {
+    e.preventDefault();
+    let ok = true;
+    $$("[required]", aForm).forEach(f => { const bad = !f.value.trim(); f.classList.toggle("invalid", bad); if (bad) ok = false; });
+    if (!ok) return toast("Sila isi nama dan nombor telefon.");
+    const d = Object.fromEntries(new FormData(aForm));
+    if (!going) { delete d.adults; delete d.kids; }
+    const list = store.get("attendance", []);
+    list.push({ ...d, going, at: Date.now() });
+    store.set("attendance", list);
+    aForm.reset(); setGoing(true);
+    aForm.hidden = true; $("#attendThanks").hidden = false;
+    setTimeout(() => { closeSheet(); aForm.hidden = false; $("#attendThanks").hidden = true; }, 2000);
   });
 
   /* ---------- Toast ---------- */
