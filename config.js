@@ -77,7 +77,7 @@ window.WEDDING = {
 
   // Google Sheets: tampal URL "Web app" dari Apps Script di sini.
   // Kosong = RSVP & ucapan hanya disimpan dalam phone tetamu.
-  sheetUrl: "",
+  sheetUrl: "https://script.google.com/macros/s/AKfycbwcYAazT-soCGPPdy0fNFJquSQdfK_UBo11yeZuRwHuIPhpSj13tm4DXGwBCnH1oYfD-A/exec",
 
   // Ucapan awal (kosong untuk majlis sebenar)
   seedWishes: [],
