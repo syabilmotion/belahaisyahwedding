@@ -288,9 +288,30 @@
     if (sec.classList.contains("in")) run();
     else { el.textContent = 0; sec.addEventListener("revealed", run, { once: true }); }
   }
+  /* ---------- Google Sheets link (config.js → sheetUrl) ---------- */
+  const SHEET = (C.sheetUrl || "").trim();
+  let remoteWishes = null; // [[wish, name], ...] from the Sheet, newest first
+  function sendToSheet(payload) {
+    if (!SHEET) return;
+    // text/plain keeps this a "simple" request, so Apps Script accepts it without CORS preflight
+    fetch(SHEET, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) })
+      .catch(() => {});
+  }
+  function loadWishes() {
+    if (!SHEET) return;
+    fetch(SHEET).then(r => r.json()).then(d => {
+      remoteWishes = (d.wishes || []).map(x => [String(x.wish || ""), String(x.name || "")]).filter(x => x[0]);
+      renderWishes();
+    }).catch(() => {});
+  }
+
   function renderWishes() {
     const mine = store.get("rsvps", []);
-    const list = [...mine.filter(x => x.wish).map(x => [x.wish, x.name]).reverse(), ...C.seedWishes];
+    const local = mine.filter(x => x.wish).map(x => [x.wish, x.name]).reverse();
+    // with the Sheet: everyone's wishes, plus this guest's own ones that the Sheet hasn't returned yet
+    const list = remoteWishes
+      ? [...local.filter(([w, n]) => !remoteWishes.some(r => r[0] === w && r[1] === n)), ...remoteWishes]
+      : [...local, ...C.seedWishes];
     // newest first, in a scrollable box; no attendance counts
     const box = $("#wishes");
     box.innerHTML = list.length
@@ -299,12 +320,14 @@
     $("#wishTotal").textContent = list.length ? `${list.length} UCAPAN` : "";
   }
   renderWishes();
+  loadWishes();
 
   /* ---------- Sheets ---------- */
   const backdrop = $("#sheetBackdrop");
   let current = null;
   function openSheet(name) {
     if (name === "music") { toggleMusic(); return; }
+    if (name === "attend") { closeSheet(); $("#rsvp").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
     const el = $("#sheet-" + name);
     if (!el) return;
     if (current === el) return closeSheet();
@@ -393,6 +416,7 @@
     const list = store.get("rsvps", []);
     list.push({ ...d, attend: attending, at: Date.now() });
     store.set("rsvps", list);
+    sendToSheet({ type: "wish", name: d.name, wish: d.wish });
     form.reset(); $("#wishCount").textContent = 0;
     form.hidden = true; $("#rsvpThanks").hidden = false;
     renderWishes();
@@ -404,10 +428,11 @@
   let going = true;
   const setGoing = v => {
     going = v;
-    $$("#sheet-attend .seg-btn").forEach(b => b.classList.toggle("active", (b.dataset.going === "1") === v));
+    $$("#rsvp .seg-btn").forEach(b => b.classList.toggle("active", (b.dataset.going === "1") === v));
     aForm.classList.toggle("no", !v);
   };
-  $$("#sheet-attend .seg-btn").forEach(b => b.addEventListener("click", () => setGoing(b.dataset.going === "1")));
+  $$("#rsvp .seg-btn").forEach(b => b.addEventListener("click", () => setGoing(b.dataset.going === "1")));
+  $("#attendAgain").addEventListener("click", () => { aForm.hidden = false; $("#attendThanks").hidden = true; });
   aForm.addEventListener("submit", e => {
     e.preventDefault();
     let ok = true;
@@ -418,9 +443,12 @@
     const list = store.get("attendance", []);
     list.push({ ...d, going, at: Date.now() });
     store.set("attendance", list);
+    sendToSheet({ type: "rsvp", name: d.name, phone: d.phone, going, adults: d.adults, kids: d.kids });
+    $("#attendThanksMsg").textContent = going
+      ? `Terima kasih, ${d.name}! Kami menanti kehadiran anda.`
+      : `Terima kasih, ${d.name}. Doa anda amat kami hargai.`;
     aForm.reset(); setGoing(true);
     aForm.hidden = true; $("#attendThanks").hidden = false;
-    setTimeout(() => { closeSheet(); aForm.hidden = false; $("#attendThanks").hidden = true; }, 2000);
   });
 
   /* ---------- Toast ---------- */

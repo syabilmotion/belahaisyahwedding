@@ -75,6 +75,10 @@ window.WEDDING = {
   song: "assets/lagu.mp3?v=3",
   songTitle: "Lagu Latar Majlis",
 
+  // Google Sheets: tampal URL "Web app" dari Apps Script di sini.
+  // Kosong = RSVP & ucapan hanya disimpan dalam phone tetamu.
+  sheetUrl: "",
+
   // Ucapan awal (kosong untuk majlis sebenar)
   seedWishes: [],
   seedStats: { yes: 0, no: 0 }

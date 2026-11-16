@@ -561,3 +561,10 @@ body{font-weight:600;font-size:19px}
 #attendForm.no .if-going{display:none}
 .rsvp-intro{margin:-4px 0 6px;font-style:italic}
 html,body{overflow-x:hidden}
+
+/* ---------- RSVP section ---------- */
+.rsvp-card{padding:20px 18px;text-align:left}
+.rsvp-card .seg{margin:0 0 16px}
+.rsvp-card .btn-row{justify-content:center;margin-top:6px}
+.rsvp-thanks{text-align:center;padding:10px 0}
+.rsvp-thanks .t-body{margin-bottom:14px}
