@@ -568,3 +568,8 @@ html,body{overflow-x:hidden}
 .rsvp-card .btn-row{justify-content:center;margin-top:6px}
 .rsvp-thanks{text-align:center;padding:10px 0}
 .rsvp-thanks .t-body{margin-bottom:14px}
+
+/* nothing behind the welcome screen can be scrolled to or seen until "Buka" */
+body.locked #main{display:none}
+html:has(body.locked){overflow:hidden;height:100%}
+body.locked{height:100%;overscroll-behavior:none}

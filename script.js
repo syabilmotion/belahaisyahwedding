@@ -237,6 +237,7 @@
   $("#openBtn").addEventListener("click", () => {
     $("#cover").classList.add("open");
     document.body.classList.remove("locked");
+    void $("#main").offsetHeight; // let the content render hidden first so its entrance still animates
     document.body.classList.add("opened");
     $(".hero").classList.add("play");
     window.scrollTo(0, 0);
